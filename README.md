@@ -14,4 +14,8 @@
 
 - sleuth 7001 c-p-p8001 order-80
 
-- nacos alibaba9001 alibaba9002 nacos-consumer80 3377
+- nacos nacos-server alibaba9001 alibaba9002 nacos-consumer80 3377
+
+- sentinel nacos-server sentinel-dashboard alibaba9003 alibaba9004 sentinel8801 nacos-consumer81
+
+- seata nacos-server seata-server 2001 2002 2003
