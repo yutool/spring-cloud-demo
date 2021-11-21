@@ -1,0 +1,70 @@
+server:
+  port: 9500
+
+spring:
+  application:
+    name: zull-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+zuul:
+  routes:
+    baidu:                        # 路由 id 自定义
+      path: /baidu/**             # 配置请求url的映射路径
+      url: https://www.baidu.com  # 映射路径对应的微服务地址
+    # 遵循约定大于配置，下面这些会根据eureka的信息配置
+    provider-service:
+      path: /provider-service/**
+      serviceId: provider-service
+  # 路由排除
+  ignored-patterns: /order/**
+  #ignored-services:
+  #ignored-headers:
+  # 路由前缀
+  prefix: /zuul
+  ratelimit:
+    # 开启限流
+    enabled: true
+    # 存储媒介
+    repository: REDIS
+    # 缓存key名称前缀
+    key-prefix: cache-key-prefix
+    behind-proxy: true
+    # 可选，默认全局配置，根据规则找不到会应用这个配置
+    default-policy-list:
+      - limit: 10             # 可选，时间窗口内最多访问次数
+        quota: 1000           # 可选，时间窗口，单位s
+        refresh-interval: 60  # 刷新时间窗口的间隔
+        type:                 # 可选，规则类型
+          - user
+          - origin
+          - url
+          - http_method
+    # 具体的规则定义
+    policy-list:
+      provider-service:   # 微服务名称
+        - limit: 10
+          quota: 1000
+          refresh-interval: 60
+          type:
+            - user
+            - origin
+            - url
+        - type: # 每个类型的可选值
+            - user=anonymous
+            - origin=somemachine.com
+            - url=/api
+            - role=user
+            - http_method=get
+        - type:
+            - url_pattern=/api/*/payment
+  retryable: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

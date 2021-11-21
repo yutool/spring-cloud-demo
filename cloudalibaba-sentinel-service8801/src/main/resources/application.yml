@@ -2,25 +2,47 @@ server:
   port: 8801
 spring:
   application:
-    name: cloudalibaba-sentinel-service
+    name: sentinel-provider
   cloud:
     nacos:
       discovery:
         # Nacos服务注册中心地址
-        server-addr: localhost:8848
+        server-addr: 127.0.0.1:10000
     sentinel:
+#      enabled: true # 开启sentinel
+#      eager: false # 提前初始化
+#      blockPage: # 定制的重定向URL。当速率受到限制时，请求将被重定向到预定义的URL
+#      transport:
+#        port: 8719  # 与dashboard通信端口，如果被占用会自动+1
+#        dashboard: # dashboard地址
+#        heartbeatIntervalMs: # 客户端和dashboard的心跳间隔
+#        client-ip: # 客户端ip
+#      filter:
+#        enabled: true # 启用过滤器
+#        order:  # 过滤器的加载顺序，默认 Integer.MIN_VALUE
+#        url-patterns: /* # 过滤URL
+#      metric:
+#        charset: UTF-8 # metric字符编码
+#        fileSingleSize: # 单个文件大小
+#        fileTotalCount: # 文件总数
+#      log:
+#        dir: # 日志文件目录
+#        switch-pid: false # 日志文件名PID
+#      flow:
+#        coldFactor: 3 # 冷启动
+
       transport:
         # sentinel dashboard 地址
         dashboard: localhost:8080
         # 默认为8719，如果被占用会自动+1，直到找到为止
         port: 8719
       # 流控规则持久化到nacos
-      datasource:
-        dsl:
+      datasource: # 规则持久化，支持file，nacos，zk，apollo，redis，consul
+        flow-rules:
           nacos:
-            server-addr: localhost:8848
-            data-id: ${spring.application.name}
-            group-id: DEFAULT_GROUP
+            server-addr: 127.0.0.1:10000
+            data-id: ${spring.application.name}-flow-rules
+            group-id: SENTINEL_GROUP
             data-type: json
             rule-type: flow
 management:

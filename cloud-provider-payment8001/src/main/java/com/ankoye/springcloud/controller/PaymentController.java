@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
-    @Resource
+    @Autowired
     private DiscoveryClient discoveryClient;
 
     @Value("${server.port}")

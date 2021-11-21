@@ -6,12 +6,43 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848 # 注册中心
+        server-addr: 127.0.0.1:8848 # 服务端地址
+#        service: ${spring.application.name} # 给当前服务命名，默认
+#        weight: 1 # 取值范围:1 ~ 100。值越大，权重越大
+#        network-interface: # 当ip未配置时，注册的ip为此网卡所对应的ip地址。当此项也未配置，则默认去第一块网卡地址
+#        ip: # 优先级最高
+#        port: -1 # 默认自动检测。不需要配置。
+#        namespace: public # 一个典型的场景是隔离不同环境的服务注册，例如测试环境和生产环境之间的资源(配置、服务等)隔离
+#        access-key:   # 阿里巴巴云账户acceServiceRegistry ssKey
+#        secret-key:   # 阿里巴巴云账户secretKey
+#        metadata:   # Map格式为服务定义一些元数据
+#        log-name:  #
+#        cluster-name: DEFAULT # Nacos的集群名称
+#        endpoint: # 地域的某个服务的入口域名，通过此域名可以动态拿到服务端地址
+#        watch:
+#          enabled: true # 监控
+#        ephemeral:
       config:
-        server-addr: localhost:8848 # 配置中心
-        file-extension: yml # 这里指定的文件格式需要和nacos上新建的配置文件后缀相同，否则读不到
-        group: DEV_GROUP
-#        namespace: 435d1000-17d4-4d7e-a958-e008f1a20463 # dev namespace
+        server-addr: 127.0.0.1:8848 # 服务端地址
+#        prefix: # 首先取前缀，然后取名称，最后取spring.application.name
+#        name:   # 首先取前缀，然后取名称，最后取spring.application.name
+#        encode: # 编码
+#        group: DEFAULT_GROUP # 组
+#        fileExtension: properties # nacos配置dataId的后缀，也是配置内容的文件扩展名
+#        timeout: 3000 # nacos获取配置超时
+#        endpoint: # 端点
+#        namespace: # Namespace
+#        access-key:   # 阿里巴巴云账户accessKey
+#        secret-key:   # 阿里巴巴云账户secretKey
+#        contextPath: # Nacos Server的上下文路径
+#        clusterName: # 集群名称
+#        sharedDataids: # 共享配置的dataId,多个用','分割
+#        extConfig: # 它是一个列表，由Config POJO构建。Config有3个属性，dataId, group和refresh
+#        shared-configs:
+
+#        file-extension: yml # 这里指定的文件格式需要和nacos上新建的配置文件后缀相同，否则读不到
+#        namespace: public
+#        group: DEV_GROUP
 
 #  ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
 # nacos-config-client-dev.yml

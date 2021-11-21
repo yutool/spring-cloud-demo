@@ -1,9 +1,11 @@
 package com.ankoye.springcloud.config;
 
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
 
 /**
  * 网关配置
@@ -29,5 +31,15 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator2(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
         return routes.route("path_route_guoji", r -> r.path("/guoji").uri("https://news.baidu.com/guoji")).build();
+    }
+
+    @Bean
+    public KeyResolver pathKeyResolver() {
+        return exchange -> Mono.just(exchange.getRequest().getURI().getPath());
+    }
+
+    @Bean
+    public KeyResolver ipKeyResolver() {
+        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
     }
 }

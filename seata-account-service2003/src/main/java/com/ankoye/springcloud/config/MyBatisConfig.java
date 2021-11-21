@@ -44,9 +44,6 @@ public class MyBatisConfig {
 
     /**
      * 构造datasource代理对象，替换原来的datasource
-     *
-     * @param druidDataSource
-     * @return
      */
     @Primary
     @Bean("dataSource")
